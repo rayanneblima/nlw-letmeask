@@ -1,5 +1,7 @@
 import { useHistory } from 'react-router-dom';
 
+import { auth, firebase } from '../services/firebase';
+
 import illustrationImg from '../assets/images/illustration.svg';
 import logoImg from '../assets/images/logo.svg';
 import googleIcon from '../assets/images/google-icon.svg';
@@ -11,7 +13,12 @@ import '../styles/auth.scss';
 export function Home() {
   const history = useHistory();
 
-  function navigateToNewRoom() {
+  function handleCreateRoom() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+    auth.signInWithPopup(provider)
+        .then(res => console.log(res));
+
     history.push('/salas/nova');
   }
 
@@ -28,7 +35,7 @@ export function Home() {
           <img src={logoImg} alt="LetMeAsk" />
           <button
             className="create-room"
-            onClick={navigateToNewRoom}
+            onClick={handleCreateRoom}
           >
             <img src={googleIcon} alt="Logo da Google" />
             Crie sua sala com o Google
